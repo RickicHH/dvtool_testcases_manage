@@ -42,16 +42,17 @@ class TC_management(TC_toolkit):
 
         return tc_block_list  
     def attribute_resolver(self):
-        tmp_dict = {  
-            'pre_cfgs_name':   [],  
-            'pre_cfgs_type':   [],  
-            'pre_cfgs_value':  [],  
-            'pre_cfgs_when':   [],  
-            'sim_args_value':  [],  
-            'post_cfgs_value': []  
-        }  
+        tc_dict_list=[]
         tc_block=self.get_testblock()
         for tc in tc_block:
+            tmp_dict = {  
+                'pre_cfgs_name':   [],  
+                'pre_cfgs_type':   [],  
+                'pre_cfgs_value':  [],  
+                'pre_cfgs_when':   [],  
+                'sim_args_value':  [],  
+                'post_cfgs_value': []  
+            }  
             for line in tc.split('\n'):
                 if self.get_attribute_type(line) == 'pre_cfgs_name':  
                     tmp_dict['pre_cfgs_name'].append(self.get_attribute_data(line))  
@@ -65,9 +66,9 @@ class TC_management(TC_toolkit):
                     tmp_dict['sim_args_value'].append(self.get_attribute_data(line))  
                 elif self.get_attribute_type(line) == 'post_cfgs_value':  
                     tmp_dict['post_cfgs_value'].append(self.get_attribute_data(line))
+            tc_dict_list.append(tmp_dict.copy())
 
-
-        return tmp_dict
+        return tc_dict_list
     def get_attribute_type(self,input_string):
         '''
         return atttribute type

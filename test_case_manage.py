@@ -124,6 +124,10 @@ def main():
     tc_block_list = tc_management.get_testblock()  
     for tc_block in tc_block_list:  
         print(tc_block)
+    
+    tc_dict_list = tc_management.attribute_resolver()
+    for tc_dict in tc_dict_list:
+        print(tc_dict)
 
 if __name__ == '__main__':
     main()

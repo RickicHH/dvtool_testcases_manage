@@ -1,0 +1,38 @@
+#    tc is short for testcase. it has below attributes:
+#    [pre_cfgs] include 
+#        [pre_cfgs].name  this is a name for the simulation testcase 
+#        [pre_cfgs].type  this is a type for tc configuration, it can be template or a testcase
+#               template  if this "type" is "template" the testcase will not publish , it only provide shared values, 
+#                         who extend this testcase , it will get the shared attributes include pre_cfgs and sim_args and post_cfgs
+#                         if this "type" is "testcase" the testcase will be published and can be run by testrunner
+#               testcase  if this "type" is "clone" the testcase will be published and can be run by
+#        [pre_cfgs].value it will define some options in pre_cfgs, it can be a string. every options will only have one line
+#        [pre_cfgs].when  it means regression tag, user can define multiple tags, it will be used to filter testcases when kick off regression
+#    [sim_args] include
+#        [sim_args].value this is a string, it will be used as a command line argument for simulation. dvrun scripts will publish it and format it
+#    [post_cfgs]
+#        [post_cfgs].value this is a name for the post_cfgs, it will be used after simulation finished. it will be used for some post scripts 
+
+#checking
+# [pre_cfgs] 
+#   if pre_cfgs.type is "testcase" , the next line must be pre_cfgs.value it means ,this testcase is extended from 
+#   another testcase, the pre_cfgs.value is the name of the extended testcase
+
+# this is a template testcase, who extend this testcase , it will get the shared attributes
+testcase:      
+    attribute[pre_cfgs].name="riscv_base_test"
+    #attribute[pre_cfgs].type="template"
+    attribute[sim_args].value="-abcd_random_enable=50"
+    attribute[sim_args].value="-abcd_random_disable=50"
+end
+
+testcase:      
+    attribute[pre_cfgs].name="riscv_base_test_1"
+    attribute[pre_cfgs].type="testcase"
+    attribute[pre_cfgs].value="riscv_base_test"   
+    attribute[pre_cfgs].when ="sanity"   
+    attribute[sim_args].variant="riscv_base_tc"
+    attribute[sim_args].value="-abcd_random_enable=50"
+    attribute[sim_args].value="-abcd_random_disable=50"
+end
+

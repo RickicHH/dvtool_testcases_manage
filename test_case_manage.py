@@ -117,27 +117,16 @@ class TC_management(TC_toolkit):
             return value
         return None
     
-    # def select_test_by_regrTags(self,regr_tag):
-    #     select_test_by_regrTags=[]
-    #     test_dict_list=self.attribute_resolver()
-    #     for test_dict in test_dict_list:
-    #         for regr_tag_item in regr_tag:
-    #             if regr_tag_item in test_dict['pre_cfgs_when']:
-    #                 select_test_by_regrTags.append(test_dict)
-    #     unique_list=[] 
-    #     return [unique_list.append(x) for x in select_test_by_regrTags if x not in unique_list] 
-
+    
     def select_test_by_regrTags(self, regr_tag):  
         select_test_by_regrTags = []  
-        seen_dicts = set()  # 用于存储已经处理过的test_dict的唯一标识符  
+        seen_dicts = set()     
         test_dict_list = self.attribute_resolver()  
         test_dict_list=self.extend_sim_args(test_dict_list)
         
         for test_dict in test_dict_list:  
             if any(regr_tag_item in test_dict['pre_cfgs_when'] for regr_tag_item in regr_tag):  
-                # 假设'pre_cfgs_name'列表中的第一个元素是唯一的，可以用作标识符  
-                # 如果不是，您需要选择一个唯一的标识符或者实现一个更复杂的比较逻辑  
-                key = tuple(test_dict['pre_cfgs_name']) if test_dict['pre_cfgs_name'] else None  # 处理空列表的情况  
+                key = tuple(test_dict['pre_cfgs_name']) if test_dict['pre_cfgs_name'] else None    
                 if key not in seen_dicts:  
                     select_test_by_regrTags.append(test_dict)  
                     seen_dicts.add(key)  
@@ -174,13 +163,13 @@ def main():
     tc_management = TC_management()  
     tc_management.set_file_path('test_template.j2')
     tc_block_list = tc_management.get_testblock()  
-    # for tc_block in tc_block_list:  
-    #     print(tc_block)
+    for tc_block in tc_block_list:  
+        print(tc_block)
     
     tc_dict_list = tc_management.attribute_resolver()
-    # for tc_dict in tc_dict_list:
-    #     print(tc_dict)
-    #     print(tc_dict['pre_cfgs_name'])
+    for tc_dict in tc_dict_list:
+        print(tc_dict)
+        print(tc_dict['pre_cfgs_name'])
 
     regr_tag=['sanity']
     print ("sanity:")

@@ -21,7 +21,7 @@
 # this is a template testcase, who extend this testcase , it will get the shared attributes
 testcase:      
     attribute[pre_cfgs].name="riscv_base_test"
-    #attribute[pre_cfgs].type="template"
+    attribute[pre_cfgs].type="template"
     attribute[sim_args].value="-efgh_random_enable=10"
     attribute[sim_args].value="-efgh_random_disable=10"
 end
@@ -38,7 +38,7 @@ end
 testcase:      
     attribute[pre_cfgs].name="riscv_base_test_2"
     attribute[pre_cfgs].type="testcase"
-    attribute[pre_cfgs].value="riscv_base_test"   
+    attribute[pre_cfgs].value="riscv_base_test_1"   
     attribute[pre_cfgs].when ="sanity"   
     attribute[sim_args].variant="riscv_base_tc"
     attribute[sim_args].value="-2_random_enable=50"
@@ -75,7 +75,7 @@ end
 testcase:      
     attribute[pre_cfgs].name="riscv_base_test_6"
     attribute[pre_cfgs].type="testcase"
-    attribute[pre_cfgs].value="riscv_base_test"   
+    attribute[pre_cfgs].value="riscv_base_test_1"   
     attribute[pre_cfgs].when ="base"   
     attribute[sim_args].variant="riscv_base_tc"
     attribute[sim_args].value="-6_random_enable=50"

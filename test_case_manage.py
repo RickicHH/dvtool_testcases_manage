@@ -67,7 +67,7 @@ class TC_management(TC_toolkit):
                 elif self.get_attribute_type(line) == 'post_cfgs_value':  
                     tmp_dict['post_cfgs_value'].append(self.get_attribute_data(line))
             tc_dict_list.append(tmp_dict.copy())
-
+        
         return tc_dict_list
     def get_attribute_type(self,input_string):
         '''
@@ -126,10 +126,12 @@ class TC_management(TC_toolkit):
     #                 select_test_by_regrTags.append(test_dict)
     #     unique_list=[] 
     #     return [unique_list.append(x) for x in select_test_by_regrTags if x not in unique_list] 
+
     def select_test_by_regrTags(self, regr_tag):  
         select_test_by_regrTags = []  
         seen_dicts = set()  # 用于存储已经处理过的test_dict的唯一标识符  
         test_dict_list = self.attribute_resolver()  
+        test_dict_list=self.extend_sim_args(test_dict_list)
         
         for test_dict in test_dict_list:  
             if any(regr_tag_item in test_dict['pre_cfgs_when'] for regr_tag_item in regr_tag):  
@@ -139,8 +141,35 @@ class TC_management(TC_toolkit):
                 if key not in seen_dicts:  
                     select_test_by_regrTags.append(test_dict)  
                     seen_dicts.add(key)  
-        
         return select_test_by_regrTags
+    def extend_sim_args(self,test_cases):  
+        for testcase in test_cases:
+            current_sim_args=[]
+            current_pre_cfgs_when=[]
+            if testcase['pre_cfgs_type'][0]=='template':
+                need_to_extend=False
+                continue
+            else:
+                need_to_extend=True
+            current_pre_cfgs_value=testcase['pre_cfgs_value'][0]
+            current_sim_args.extend(testcase['sim_args_value'])
+            current_pre_cfgs_when.extend(testcase['pre_cfgs_when'])
+            while  need_to_extend:
+                for tc in test_cases :
+                    if(tc['pre_cfgs_name'][0]==current_pre_cfgs_value):
+                        current_sim_args.extend(tc['sim_args_value'])
+                        current_pre_cfgs_when.extend(tc['pre_cfgs_when'])
+                        if (tc['pre_cfgs_type'][0]=='template'):
+                            need_to_extend=False
+                        else:
+                            current_pre_cfgs_value=tc['pre_cfgs_value'][0]
+            testcase['sim_args_value']=list(set(current_sim_args))
+            testcase['pre_cfgs_when']=list(set(current_pre_cfgs_when))
+
+        return test_cases
+                    
+    
+
 def main():
     tc_management = TC_management()  
     tc_management.set_file_path('test_template.j2')

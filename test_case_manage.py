@@ -117,7 +117,7 @@ class TC_management(TC_toolkit):
             return value
         return None
     
-    
+
     def select_test_by_regrTags(self, regr_tag):  
         select_test_by_regrTags = []  
         seen_dicts = set()     
@@ -131,6 +131,15 @@ class TC_management(TC_toolkit):
                     select_test_by_regrTags.append(test_dict)  
                     seen_dicts.add(key)  
         return select_test_by_regrTags
+    def select_test_by_testNames(self,test_names):
+        select_test_by_testNames = []
+        test_dict_list = self.attribute_resolver()  
+        test_dict_list=self.extend_sim_args(test_dict_list)
+        for test_dict in test_dict_list:
+            if test_dict['pre_cfgs_name'][0] in test_names:
+                select_test_by_testNames.append(test_dict)
+
+        return select_test_by_testNames
     def extend_sim_args(self,test_cases):  
         for testcase in test_cases:
             current_sim_args=[]

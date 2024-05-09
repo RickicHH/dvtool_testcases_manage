@@ -16,6 +16,8 @@ class TC_toolkit(object):
 class TC_management(TC_toolkit):
     def __init__(self) -> None:
         super().__init__()
+    def get_import_tc(self):
+       pass 
     def get_testblock(self):
         tc_block_list = []    
         testcase = False  
@@ -105,7 +107,6 @@ class TC_management(TC_toolkit):
             return 'post_cfgs_value'
 
         return None    
-    
     def get_attribute_data(self, input_string):  
         '''
         return attribute data

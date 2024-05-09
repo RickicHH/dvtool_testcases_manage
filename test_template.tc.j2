@@ -17,14 +17,9 @@
 # [pre_cfgs] 
 #   if pre_cfgs.type is "testcase" , the next line must be pre_cfgs.value it means ,this testcase is extended from 
 #   another testcase, the pre_cfgs.value is the name of the extended testcase
-
+import 'test_share.tc.j2'
 # this is a template testcase, who extend this testcase , it will get the shared attributes
-testcase:      
-    attribute[pre_cfgs].name="riscv_base_test"
-    attribute[pre_cfgs].type="template"
-    attribute[sim_args].value="-efgh_random_enable=10"
-    attribute[sim_args].value="-efgh_random_disable=10"
-end
+
 
 testcase:      
     attribute[pre_cfgs].name="riscv_base_test_1"
